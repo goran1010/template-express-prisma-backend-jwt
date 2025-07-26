@@ -1,3 +1,3 @@
-# express-template-prisma-api
+# express-template-prisma-api-jwt
 
-Template for Express Prisma API backend
+Template for Express Prisma API backend with JWT auth

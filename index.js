@@ -1,12 +1,11 @@
 import express from "express";
-import passport from "./auth/passport.js";
 import dotenv from "dotenv";
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
-import flash from "connect-flash";
-app.use(flash());
-import sessionMiddleware from "./auth/sessionMiddleware.js";
+import cors from "cors";
+
+app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -24,17 +23,11 @@ const assetsPath = path.join(__dirname, "public");
 app.use(express.static(assetsPath));
 
 import apiRouter from "./routes/apiRouter.js";
-
-app.use(sessionMiddleware);
-app.use(passport.session());
-app.use((req, res, next) => {
-  res.locals.currentUser = req.user;
-  res.locals.success = req.flash("success");
-  res.locals.fail = req.flash("fail");
-  next();
-});
+import authRouter from "./routes/authRouter.js";
 
 app.use("/api", apiRouter);
+
+app.use("/", authRouter);
 
 app.use((req, res) => {
   res.status(404).json("No resource found");

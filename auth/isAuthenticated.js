@@ -1,6 +1,4 @@
 import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
-dotenv.config();
 const MY_SECRET_KEY = process.env.MY_SECRET_KEY;
 
 export default function isAuthenticated(req, res, next) {

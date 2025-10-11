@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-const MY_SECRET_KEY = process.env.MY_SECRET_KEY;
+const SECRET = process.env.SECRET;
 
 export default function isAuthenticated(req, res, next) {
   const authHeader = req.headers["authorization"];
@@ -10,7 +10,7 @@ export default function isAuthenticated(req, res, next) {
       .json({ errors: [{ msg: "Expired session token" }] });
   }
 
-  jwt.verify(token, MY_SECRET_KEY, (err, token) => {
+  jwt.verify(token, SECRET, (err, token) => {
     if (err) {
       return res.sendStatus(403);
     }
